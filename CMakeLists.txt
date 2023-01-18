@@ -90,9 +90,6 @@ endif(NOT CMAKE_C_STANDARD)
 
 set(CMAKE_C_STANDARD_REQUIRED True)
 
-# Read config from file
-include(build/config.cmake)
-
 # Configure different targets
 # TODO: Set flags for MSVC
 if(NOT MSVC)
