@@ -119,6 +119,10 @@ if(WIN32 AND NOT MSVC)
     )
 endif()
 
+if(MSVC)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+endif()
+
 # Set include paths
 include_directories(${INCLUDE_PATHS} ${PROJECT_BINARY_DIR})
 
