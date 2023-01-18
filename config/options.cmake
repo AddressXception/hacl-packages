@@ -29,6 +29,12 @@ endif()
 # By default tests aren't built
 option(ENABLE_TESTS "Enable HACL tests.")
 
-# Sannitaizers
+# Sanitizers
 option(ENABLE_ASAN "Enable address sanitizers.")
 option(ENABLE_UBSAN "Enable undefined behaviour sanitizers.")
+
+# Custom Config File
+if(HACL_CUSTOM_CONFIG_FILE_PATH)
+    message(STATUS "Using HACL_CUSTOM_CONFIG_FILE_PATH " ${HACL_CUSTOM_CONFIG_FILE_PATH})
+    configure_file(${HACL_CUSTOM_CONFIG_FILE_PATH} ${PROJECT_SOURCE_DIR}/build/config.cmake COPYONLY)
+endif()

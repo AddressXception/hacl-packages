@@ -56,7 +56,16 @@ set(hacl_VERSION_TWEAK "")
 # If the file is not present, i.e. cmake was invoked directly, we copy the default
 # config from config/default_config.cmake
 if(NOT EXISTS ${PROJECT_SOURCE_DIR}/build/config.cmake)
-    configure_file(${PROJECT_SOURCE_DIR}/config/default_config.cmake ${PROJECT_SOURCE_DIR}/build/config.cmake COPYONLY)
+    message(STATUS "Compiling with default configuration")
+    if(MSVC)
+        configure_file(
+            ${PROJECT_SOURCE_DIR}/config/default_config_msvc.cmake 
+            ${PROJECT_SOURCE_DIR}/build/config.cmake COPYONLY)
+    else()
+        configure_file(
+            ${PROJECT_SOURCE_DIR}/config/default_config.cmake 
+            ${PROJECT_SOURCE_DIR}/build/config.cmake COPYONLY)
+    endif()
 endif()
 
 # Now include the config.
