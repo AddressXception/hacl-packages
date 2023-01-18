@@ -18,17 +18,9 @@ cmake_policy(SET CMP0012 NEW)
 cmake_policy(SET CMP0042 NEW)
 
 if(WIN32)
+    message(STATUS "Compiling with WIN32")
     # Make sure we have visual studio enabled
     cmake_policy(SET CMP0091 NEW)
-
-    # Avoid picking something that's not clang, unless the caller wants MSVC.
-    if(NOT USE_MSVC)
-        SET(CMAKE_C_COMPILER clang)
-        SET(CMAKE_CXX_COMPILER clang++)
-    else()
-        SET(CMAKE_C_COMPILER cl)
-        SET(CMAKE_CXX_COMPILER cl)
-    endif(NOT USE_MSVC)
 endif()
 
 # Library version and name
