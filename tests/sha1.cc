@@ -12,8 +12,8 @@
 
 #include "EverCrypt_Hash.h"
 #include "Hacl_Hash_Base.h"
+#include "Hacl_Hash_SHA1.h"
 #include "Hacl_Spec.h"
-#include "Hacl_Streaming_SHA1.h"
 #include "config.h"
 #include "evercrypt.h"
 #include "util.h"
@@ -76,13 +76,16 @@ TEST(ApiSuite, ApiTest)
 
     uint8_t digest[HACL_HASH_SHA1_DIGEST_LENGTH];
 
-    Hacl_Hash_SHA1_legacy_hash((uint8_t*)message, message_size, digest);
+    Hacl_Streaming_SHA1_legacy_hash((uint8_t*)message, message_size, digest);
     // END OneShot
 
     bytes expected_digest =
       from_hex("0a0a9f2a6772942557ab5355d76af442f8f65e01");
 
-    EXPECT_EQ(strncmp((char*)digest, (char*)expected_digest.data(), HACL_HASH_SHA1_DIGEST_LENGTH), 0);
+    EXPECT_EQ(strncmp((char*)digest,
+                      (char*)expected_digest.data(),
+                      HACL_HASH_SHA1_DIGEST_LENGTH),
+              0);
   }
 
   // Documentation.
@@ -102,25 +105,22 @@ TEST(ApiSuite, ApiTest)
     uint8_t digest_2[HACL_HASH_SHA1_DIGEST_LENGTH];
 
     // Init
-    Hacl_Streaming_SHA1_state_sha1* state =
-      Hacl_Streaming_SHA1_legacy_create_in_sha1();
-    Hacl_Streaming_SHA1_legacy_init_sha1(state);
+    Hacl_Streaming_SHA1_state* state = Hacl_Streaming_SHA1_legacy_create_in();
+    Hacl_Streaming_SHA1_legacy_init(state);
 
     // 1/2 Include `Hello, ` into the hash calculation and
     // obtain the intermediate hash of "Hello, ".
-    Hacl_Streaming_SHA1_legacy_update_sha1(
-      state, (uint8_t*)chunk_1, chunk_1_size);
+    Hacl_Streaming_SHA1_legacy_update(state, (uint8_t*)chunk_1, chunk_1_size);
     // This is optional when no intermediate results are required.
-    Hacl_Streaming_SHA1_legacy_finish_sha1(state, digest_1);
+    Hacl_Streaming_SHA1_legacy_finish(state, digest_1);
 
     // 2/2 Include `World!` into the hash calculation and
     // obtain the final hash of "Hello, World!".
-    Hacl_Streaming_SHA1_legacy_update_sha1(
-      state, (uint8_t*)chunk_2, chunk_2_size);
-    Hacl_Streaming_SHA1_legacy_finish_sha1(state, digest_2);
+    Hacl_Streaming_SHA1_legacy_update(state, (uint8_t*)chunk_2, chunk_2_size);
+    Hacl_Streaming_SHA1_legacy_finish(state, digest_2);
 
     // Cleanup
-    Hacl_Streaming_SHA1_legacy_free_sha1(state);
+    Hacl_Streaming_SHA1_legacy_free(state);
 
     print_hex_ln(HACL_HASH_SHA1_DIGEST_LENGTH, digest_1);
     print_hex_ln(HACL_HASH_SHA1_DIGEST_LENGTH, digest_2);
@@ -154,18 +154,17 @@ TEST_P(Sha1, KAT)
   bytes digest(test.md.size());
 
   // Init
-  Hacl_Streaming_SHA2_state_sha2_224* state =
-    Hacl_Streaming_SHA1_legacy_create_in_sha1();
-  Hacl_Streaming_SHA1_legacy_init_sha1(state);
+  Hacl_Streaming_SHA1_state* state = Hacl_Streaming_SHA1_legacy_create_in();
+  Hacl_Streaming_SHA1_legacy_init(state);
 
   // Update
   for (auto chunk : split_by_index_list(test.msg, lengths)) {
-    Hacl_Streaming_SHA1_legacy_update_sha1(state, chunk.data(), chunk.size());
+    Hacl_Streaming_SHA1_legacy_update(state, chunk.data(), chunk.size());
   }
 
   // Finish
-  Hacl_Streaming_SHA1_legacy_finish_sha1(state, digest.data());
-  Hacl_Streaming_SHA1_legacy_free_sha1(state);
+  Hacl_Streaming_SHA1_legacy_finish(state, digest.data());
+  Hacl_Streaming_SHA1_legacy_free(state);
 
   EXPECT_EQ(test.md, digest) << bytes_to_hex(test.md) << endl
                              << bytes_to_hex(digest) << endl;
@@ -188,10 +187,10 @@ TEST_P(EverCryptSuiteTestCase, HashTest)
     bytes got_digest(
       Hacl_Hash_Definitions_hash_len(Spec_Hash_Definitions_SHA1));
 
-    EverCrypt_Hash_hash(Spec_Hash_Definitions_SHA1,
-                        got_digest.data(),
-                        test.msg.data(),
-                        test.msg.size());
+    EverCrypt_Hash_Incremental_hash(Spec_Hash_Definitions_SHA1,
+                                    got_digest.data(),
+                                    test.msg.data(),
+                                    test.msg.size());
     ASSERT_EQ(test.md, got_digest);
   }
 
@@ -199,8 +198,7 @@ TEST_P(EverCryptSuiteTestCase, HashTest)
     bytes got_digest(
       Hacl_Hash_Definitions_hash_len(Spec_Hash_Definitions_SHA1));
 
-    // Use a typedef?
-    Hacl_Streaming_Functor_state_s___EverCrypt_Hash_state_s____* state =
+    EverCrypt_Hash_Incremental_hash_state* state =
       EverCrypt_Hash_Incremental_create_in(Spec_Hash_Definitions_SHA1);
     EverCrypt_Hash_Incremental_init(state);
 

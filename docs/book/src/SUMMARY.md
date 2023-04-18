@@ -6,6 +6,7 @@
 - [Platforms](./platforms.md)
   - [Architectures](./architectures.md)
 <!-- - [Installation](./installation.md) -->
+- [Development News](./news.md)
 
 # Building
 
@@ -20,7 +21,7 @@
 - [Rust](./hacl-rust/readme.md)
   <!-- - [AEADs](./hacl-rust/aead.md) -->
 - [OCaml](./hacl-ocaml/readme.md)
-<!-- - [JavaScript](./hacl-js/readme.md) -->
+- [JavaScript](./hacl-js/readme.md)
 
 # Developer Guide
 
@@ -29,6 +30,8 @@
   - [Build Process](./developers/build-process.md)
     - [Rust](./developers/rust-build.md)
     - [OCaml](./developers/ocaml-build.md)
+    - [JavaScript](./developers/js-build.md)
   - [Continuous Integration](./developers/ci.md)
   - [Documentation](./developers/documentation.md)
     - [OCaml](./developers/ocaml-docs.md)
+  - [Benchmarks](./developers/benchmarks.md)
