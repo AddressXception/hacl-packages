@@ -561,3 +561,4 @@ set(TEST_FILES_evercrypt
 set(TEST_FILES_aead
 	aead.cc
 )
+
