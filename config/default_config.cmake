@@ -17,7 +17,9 @@ set(SOURCES_std
 	${PROJECT_SOURCE_DIR}/src/Hacl_Bignum256.c
 	${PROJECT_SOURCE_DIR}/src/Hacl_Bignum32.c
 	${PROJECT_SOURCE_DIR}/src/Hacl_Bignum4096_32.c
+	${PROJECT_SOURCE_DIR}/src/Hacl_Bignum4096.c
 	${PROJECT_SOURCE_DIR}/src/Hacl_GenericField32.c
+	${PROJECT_SOURCE_DIR}/src/Hacl_GenericField64.c
 	${PROJECT_SOURCE_DIR}/src/Hacl_Chacha20Poly1305_32.c
 	${PROJECT_SOURCE_DIR}/src/Hacl_Chacha20.c
 	${PROJECT_SOURCE_DIR}/src/Hacl_Streaming_Poly1305_32.c
