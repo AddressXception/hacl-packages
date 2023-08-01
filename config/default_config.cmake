@@ -73,9 +73,7 @@ set(SOURCES_vec256
 set(SOURCES_vec128
 	${PROJECT_SOURCE_DIR}/src/Hacl_Hash_Blake2s_128.c
 	${PROJECT_SOURCE_DIR}/src/Hacl_Streaming_Blake2s_128.c
-	${PROJECT_SOURCE_DIR}/src/Hacl_Bignum4096.c
 	${PROJECT_SOURCE_DIR}/src/Hacl_Bignum64.c
-	${PROJECT_SOURCE_DIR}/src/Hacl_GenericField64.c
 	${PROJECT_SOURCE_DIR}/src/Hacl_Chacha20Poly1305_128.c
 	${PROJECT_SOURCE_DIR}/src/Hacl_Poly1305_128.c
 	${PROJECT_SOURCE_DIR}/src/Hacl_Chacha20_Vec128.c
