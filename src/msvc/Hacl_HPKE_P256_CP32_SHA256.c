@@ -24,6 +24,7 @@
 
 
 #include "Hacl_HPKE_P256_CP32_SHA256.h"
+#define alloca malloc
 
 #include "internal/Hacl_P256.h"
 

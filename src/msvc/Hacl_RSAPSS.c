@@ -24,6 +24,7 @@
 
 
 #include "Hacl_RSAPSS.h"
+#define alloca malloc
 
 #include "internal/Hacl_Krmllib.h"
 #include "internal/Hacl_Bignum_Base.h"

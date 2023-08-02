@@ -24,6 +24,7 @@
 
 
 #include "Hacl_HPKE_Curve51_CP32_SHA256.h"
+#define alloca malloc
 
 #include "internal/Hacl_Krmllib.h"
 

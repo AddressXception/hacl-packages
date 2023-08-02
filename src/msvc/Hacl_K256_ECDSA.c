@@ -24,6 +24,7 @@
 
 
 #include "internal/Hacl_K256_ECDSA.h"
+#define alloca malloc
 
 #include "internal/Hacl_Krmllib.h"
 #include "internal/Hacl_K256_PrecompTable.h"
