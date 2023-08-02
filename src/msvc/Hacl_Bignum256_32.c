@@ -692,7 +692,8 @@ static uint32_t exp_check(uint32_t *n, uint32_t *a, uint32_t bBits, uint32_t *b)
       acc = (beq & acc) | (~beq & ((blt & (uint32_t)0xFFFFFFFFU) | (~blt & (uint32_t)0U)));
     }
     uint32_t res = acc;
-    m1 = res;
+    m1 = res;    
+    free(b2);
   }
   else
   {
@@ -1437,6 +1438,7 @@ uint32_t *Hacl_Bignum256_32_new_bn_from_bytes_be(uint32_t len, uint8_t *b)
     uint32_t x = u;
     os[i] = x;
   }
+  free(tmp);
   return res2;
 }
 
@@ -1488,6 +1490,7 @@ uint32_t *Hacl_Bignum256_32_new_bn_from_bytes_le(uint32_t len, uint8_t *b)
     uint32_t x = r1;
     os[i] = x;
   }
+  free(tmp);
   return res2;
 }
 

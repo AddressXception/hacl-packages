@@ -6,6 +6,7 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#define alloca malloc
 #endif
 
 #if (defined(__APPLE__) && defined(__MACH__)) || defined(__linux__)

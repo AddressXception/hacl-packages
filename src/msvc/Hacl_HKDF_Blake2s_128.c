@@ -90,6 +90,7 @@ Hacl_HKDF_Blake2s_128_expand_blake2s_128(
     uint8_t *block = okm + n * tlen;
     memcpy(block, tag, (len - n * tlen) * sizeof (uint8_t));
   }
+  free(text);
 }
 
 /**

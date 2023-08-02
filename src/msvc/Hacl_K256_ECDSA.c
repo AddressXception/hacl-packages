@@ -496,6 +496,7 @@ mul_pow2_256_minus_q_add(
   memcpy(res + (uint32_t)2U, a, len * sizeof (uint64_t));
   uint64_t uu____0 = bn_add(resLen, res, len + (uint32_t)2U, tmp, res);
   uint64_t c = bn_add(resLen, res, (uint32_t)4U, e, res);
+  free(tmp);
   return c;
 }
 

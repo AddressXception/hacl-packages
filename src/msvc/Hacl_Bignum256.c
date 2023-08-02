@@ -670,6 +670,7 @@ static uint64_t exp_check(uint64_t *n, uint64_t *a, uint32_t bBits, uint64_t *b)
     }
     uint64_t res = acc;
     m1 = res;
+    free(b2);
   }
   else
   {
@@ -1390,6 +1391,7 @@ uint64_t *Hacl_Bignum256_new_bn_from_bytes_be(uint32_t len, uint8_t *b)
     uint64_t x = u;
     os[i] = x;
   }
+  free(tmp);
   return res2;
 }
 
@@ -1441,6 +1443,7 @@ uint64_t *Hacl_Bignum256_new_bn_from_bytes_le(uint32_t len, uint8_t *b)
     uint64_t x = r1;
     os[i] = x;
   }
+  free(tmp);
   return res2;
 }
 

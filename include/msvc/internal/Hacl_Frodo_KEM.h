@@ -241,6 +241,7 @@ Hacl_Impl_Frodo_Gen_frodo_gen_matrix_shake_4x(uint32_t n, uint8_t *seed, uint16_
       res[((uint32_t)4U * i + (uint32_t)3U) * n + i0] = u2;
     }
   }
+  free(r);
 }
 
 static inline void

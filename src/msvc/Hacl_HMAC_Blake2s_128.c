@@ -167,5 +167,8 @@ Hacl_HMAC_Blake2s_128_compute_blake2s_128(
     rem_len,
     rem);
   Hacl_Blake2s_128_blake2s_finish((uint32_t)32U, dst, s0);
+  free(opad);
+  free(ipad);
+  free(key_block);
 }
 

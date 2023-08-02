@@ -24,6 +24,7 @@
 
 
 #include "Hacl_Frodo64.h"
+#define alloca malloc
 
 #include "internal/Hacl_Spec.h"
 #include "internal/Hacl_Frodo_KEM.h"
@@ -171,6 +172,7 @@ uint32_t Hacl_Frodo64_crypto_kem_enc(uint8_t *ct, uint8_t *ss, uint8_t *pk)
   Lib_Memzero0_memzero(shake_input_ss, ss_init_len * sizeof (shake_input_ss[0U]));
   Lib_Memzero0_memzero(seed_se_k, (uint32_t)32U * sizeof (seed_se_k[0U]));
   Lib_Memzero0_memzero(coins, (uint32_t)16U * sizeof (coins[0U]));
+  free(shake_input_ss);
   return (uint32_t)0U;
 }
 
@@ -294,6 +296,8 @@ uint32_t Hacl_Frodo64_crypto_kem_dec(uint8_t *ss, uint8_t *ct, uint8_t *sk)
   Lib_Memzero0_memzero(kp_s, (uint32_t)16U * sizeof (kp_s[0U]));
   Lib_Memzero0_memzero(seed_se_k, (uint32_t)32U * sizeof (seed_se_k[0U]));
   Lib_Memzero0_memzero(mu_decode, (uint32_t)16U * sizeof (mu_decode[0U]));
+  free(ss_init);
+  free(pkh_mu_decode);
   return (uint32_t)0U;
 }
 

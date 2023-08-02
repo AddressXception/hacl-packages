@@ -8,6 +8,7 @@
 #if (defined(_WIN32) || defined(_WIN64))
 #  include <malloc.h>
 #endif
+#define alloca malloc
 
 /* If some globals need to be initialized before the main, then karamel will
  * generate and try to link last a function with this type: */

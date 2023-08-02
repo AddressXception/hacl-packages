@@ -24,6 +24,7 @@
 
 
 #include "EverCrypt_DRBG.h"
+#define alloca malloc
 
 #include "internal/EverCrypt_HMAC.h"
 
@@ -250,6 +251,7 @@ instantiate_sha1(
   bool ok = Lib_RandomBuffer_System_randombytes(entropy, min_entropy);
   if (!ok)
   {
+    free(entropy);
     return false;
   }
   uint8_t *entropy_input = entropy;
@@ -319,7 +321,11 @@ instantiate_sha1(
     EverCrypt_HMAC_compute_sha1(k_0, k, (uint32_t)20U, input, input_len0);
     EverCrypt_HMAC_compute_sha1(v, k_0, (uint32_t)20U, v, (uint32_t)20U);
     memcpy(k, k_0, (uint32_t)20U * sizeof (uint8_t));
+    free(input);
   }
+  free(input0);
+  free(seed_material);
+  free(entropy);
   return true;
 }
 
@@ -343,6 +349,7 @@ instantiate_sha2_256(
   bool ok = Lib_RandomBuffer_System_randombytes(entropy, min_entropy);
   if (!ok)
   {
+    free(entropy);
     return false;
   }
   uint8_t *entropy_input = entropy;
@@ -412,7 +419,11 @@ instantiate_sha2_256(
     EverCrypt_HMAC_compute_sha2_256(k_0, k, (uint32_t)32U, input, input_len0);
     EverCrypt_HMAC_compute_sha2_256(v, k_0, (uint32_t)32U, v, (uint32_t)32U);
     memcpy(k, k_0, (uint32_t)32U * sizeof (uint8_t));
+    free(input);
   }
+  free(input0);
+  free(seed_material);
+  free(entropy);
   return true;
 }
 
@@ -436,6 +447,7 @@ instantiate_sha2_384(
   bool ok = Lib_RandomBuffer_System_randombytes(entropy, min_entropy);
   if (!ok)
   {
+    free(entropy);
     return false;
   }
   uint8_t *entropy_input = entropy;
@@ -505,7 +517,11 @@ instantiate_sha2_384(
     EverCrypt_HMAC_compute_sha2_384(k_0, k, (uint32_t)48U, input, input_len0);
     EverCrypt_HMAC_compute_sha2_384(v, k_0, (uint32_t)48U, v, (uint32_t)48U);
     memcpy(k, k_0, (uint32_t)48U * sizeof (uint8_t));
+    free(input);
   }
+  free(input0);
+  free(seed_material);
+  free(entropy);
   return true;
 }
 
@@ -529,6 +545,7 @@ instantiate_sha2_512(
   bool ok = Lib_RandomBuffer_System_randombytes(entropy, min_entropy);
   if (!ok)
   {
+    free(entropy);
     return false;
   }
   uint8_t *entropy_input = entropy;
@@ -598,7 +615,11 @@ instantiate_sha2_512(
     EverCrypt_HMAC_compute_sha2_512(k_0, k, (uint32_t)64U, input, input_len0);
     EverCrypt_HMAC_compute_sha2_512(v, k_0, (uint32_t)64U, v, (uint32_t)64U);
     memcpy(k, k_0, (uint32_t)64U * sizeof (uint8_t));
+    free(input);
   }
+  free(input0);
+  free(seed_material);
+  free(entropy);
   return true;
 }
 
@@ -620,6 +641,7 @@ reseed_sha1(
   bool ok = Lib_RandomBuffer_System_randombytes(entropy_input, entropy_input_len);
   if (!ok)
   {
+    free(entropy_input);
     return false;
   }
   EverCrypt_DRBG_state_s st_s = *st;
@@ -680,7 +702,11 @@ reseed_sha1(
     EverCrypt_HMAC_compute_sha1(k_0, k, (uint32_t)20U, input, input_len0);
     EverCrypt_HMAC_compute_sha1(v, k_0, (uint32_t)20U, v, (uint32_t)20U);
     memcpy(k, k_0, (uint32_t)20U * sizeof (uint8_t));
+    free(input);
   }
+  free(input0);
+  free(seed_material);
+  free(entropy_input);
   ctr[0U] = (uint32_t)1U;
   return true;
 }
@@ -703,6 +729,7 @@ reseed_sha2_256(
   bool ok = Lib_RandomBuffer_System_randombytes(entropy_input, entropy_input_len);
   if (!ok)
   {
+    free(entropy_input);
     return false;
   }
   EverCrypt_DRBG_state_s st_s = *st;
@@ -763,7 +790,11 @@ reseed_sha2_256(
     EverCrypt_HMAC_compute_sha2_256(k_0, k, (uint32_t)32U, input, input_len0);
     EverCrypt_HMAC_compute_sha2_256(v, k_0, (uint32_t)32U, v, (uint32_t)32U);
     memcpy(k, k_0, (uint32_t)32U * sizeof (uint8_t));
+    free(input);
   }
+  free(input0);
+  free(seed_material);
+  free(entropy_input);
   ctr[0U] = (uint32_t)1U;
   return true;
 }
@@ -786,6 +817,7 @@ reseed_sha2_384(
   bool ok = Lib_RandomBuffer_System_randombytes(entropy_input, entropy_input_len);
   if (!ok)
   {
+    free(entropy_input);
     return false;
   }
   EverCrypt_DRBG_state_s st_s = *st;
@@ -846,7 +878,11 @@ reseed_sha2_384(
     EverCrypt_HMAC_compute_sha2_384(k_0, k, (uint32_t)48U, input, input_len0);
     EverCrypt_HMAC_compute_sha2_384(v, k_0, (uint32_t)48U, v, (uint32_t)48U);
     memcpy(k, k_0, (uint32_t)48U * sizeof (uint8_t));
+    free(input);
   }
+  free(input0);
+  free(seed_material);
+  free(entropy_input);
   ctr[0U] = (uint32_t)1U;
   return true;
 }
@@ -869,6 +905,7 @@ reseed_sha2_512(
   bool ok = Lib_RandomBuffer_System_randombytes(entropy_input, entropy_input_len);
   if (!ok)
   {
+    free(entropy_input);
     return false;
   }
   EverCrypt_DRBG_state_s st_s = *st;
@@ -929,7 +966,11 @@ reseed_sha2_512(
     EverCrypt_HMAC_compute_sha2_512(k_0, k, (uint32_t)64U, input, input_len0);
     EverCrypt_HMAC_compute_sha2_512(v, k_0, (uint32_t)64U, v, (uint32_t)64U);
     memcpy(k, k_0, (uint32_t)64U * sizeof (uint8_t));
+    free(input);
   }
+  free(input0);
+  free(seed_material);
+  free(entropy_input);
   ctr[0U] = (uint32_t)1U;
   return true;
 }
@@ -1030,10 +1071,14 @@ generate_sha1(
         EverCrypt_HMAC_compute_sha1(k_0, k, (uint32_t)20U, input, input_len0);
         EverCrypt_HMAC_compute_sha1(v, k_0, (uint32_t)20U, v, (uint32_t)20U);
         memcpy(k, k_0, (uint32_t)20U * sizeof (uint8_t));
+        free(input);
       }
+      free(input0);
+      free(seed_material);
       ctr[0U] = (uint32_t)1U;
       result = true;
     }
+    free(entropy_input);
     ok0 = result;
   }
   if (!ok0)
@@ -1103,7 +1148,9 @@ generate_sha1(
         EverCrypt_HMAC_compute_sha1(k_0, k, (uint32_t)20U, input, input_len0);
         EverCrypt_HMAC_compute_sha1(v, k_0, (uint32_t)20U, v, (uint32_t)20U);
         memcpy(k, k_0, (uint32_t)20U * sizeof (uint8_t));
+        free(input);
       }
+      free(input0);
     }
     uint8_t *output1 = output;
     uint32_t max = n / (uint32_t)20U;
@@ -1149,10 +1196,12 @@ generate_sha1(
       EverCrypt_HMAC_compute_sha1(k_0, k, (uint32_t)20U, input, input_len0);
       EverCrypt_HMAC_compute_sha1(v, k_0, (uint32_t)20U, v, (uint32_t)20U);
       memcpy(k, k_0, (uint32_t)20U * sizeof (uint8_t));
+      free(input);
     }
     uint32_t old_ctr = ctr[0U];
     ctr[0U] = old_ctr + (uint32_t)1U;
     b = true;
+    free(input0);
   }
   return true;
 }
@@ -1191,6 +1240,7 @@ generate_sha2_256(
     bool result;
     if (!ok)
     {
+      free(entropy_input);
       result = false;
     }
     else
@@ -1253,11 +1303,15 @@ generate_sha2_256(
         EverCrypt_HMAC_compute_sha2_256(k_0, k, (uint32_t)32U, input, input_len0);
         EverCrypt_HMAC_compute_sha2_256(v, k_0, (uint32_t)32U, v, (uint32_t)32U);
         memcpy(k, k_0, (uint32_t)32U * sizeof (uint8_t));
+        free(input);
       }
       ctr[0U] = (uint32_t)1U;
       result = true;
+      free(input0);
+      free(seed_material);
     }
     ok0 = result;
+    free(entropy_input);
   }
   if (!ok0)
   {
@@ -1326,7 +1380,9 @@ generate_sha2_256(
         EverCrypt_HMAC_compute_sha2_256(k_0, k, (uint32_t)32U, input, input_len0);
         EverCrypt_HMAC_compute_sha2_256(v, k_0, (uint32_t)32U, v, (uint32_t)32U);
         memcpy(k, k_0, (uint32_t)32U * sizeof (uint8_t));
+        free(input);
       }
+      free(input0);
     }
     uint8_t *output1 = output;
     uint32_t max = n / (uint32_t)32U;
@@ -1372,10 +1428,12 @@ generate_sha2_256(
       EverCrypt_HMAC_compute_sha2_256(k_0, k, (uint32_t)32U, input, input_len0);
       EverCrypt_HMAC_compute_sha2_256(v, k_0, (uint32_t)32U, v, (uint32_t)32U);
       memcpy(k, k_0, (uint32_t)32U * sizeof (uint8_t));
+      free(input);
     }
     uint32_t old_ctr = ctr[0U];
     ctr[0U] = old_ctr + (uint32_t)1U;
     b = true;
+    free(input0);
   }
   return true;
 }
@@ -1476,9 +1534,12 @@ generate_sha2_384(
         EverCrypt_HMAC_compute_sha2_384(k_0, k, (uint32_t)48U, input, input_len0);
         EverCrypt_HMAC_compute_sha2_384(v, k_0, (uint32_t)48U, v, (uint32_t)48U);
         memcpy(k, k_0, (uint32_t)48U * sizeof (uint8_t));
+        free(input);
       }
       ctr[0U] = (uint32_t)1U;
       result = true;
+      free(input0);
+      free(seed_material);
     }
     ok0 = result;
   }
@@ -1549,7 +1610,9 @@ generate_sha2_384(
         EverCrypt_HMAC_compute_sha2_384(k_0, k, (uint32_t)48U, input, input_len0);
         EverCrypt_HMAC_compute_sha2_384(v, k_0, (uint32_t)48U, v, (uint32_t)48U);
         memcpy(k, k_0, (uint32_t)48U * sizeof (uint8_t));
+        free(input);
       }
+      free(input0);
     }
     uint8_t *output1 = output;
     uint32_t max = n / (uint32_t)48U;
@@ -1595,10 +1658,12 @@ generate_sha2_384(
       EverCrypt_HMAC_compute_sha2_384(k_0, k, (uint32_t)48U, input, input_len0);
       EverCrypt_HMAC_compute_sha2_384(v, k_0, (uint32_t)48U, v, (uint32_t)48U);
       memcpy(k, k_0, (uint32_t)48U * sizeof (uint8_t));
+      free(input);
     }
     uint32_t old_ctr = ctr[0U];
     ctr[0U] = old_ctr + (uint32_t)1U;
     b = true;
+    free(input0);
   }
   return true;
 }
@@ -1699,11 +1764,15 @@ generate_sha2_512(
         EverCrypt_HMAC_compute_sha2_512(k_0, k, (uint32_t)64U, input, input_len0);
         EverCrypt_HMAC_compute_sha2_512(v, k_0, (uint32_t)64U, v, (uint32_t)64U);
         memcpy(k, k_0, (uint32_t)64U * sizeof (uint8_t));
+        free(input);
       }
       ctr[0U] = (uint32_t)1U;
       result = true;
+      free(input0);
+      free(seed_material);
     }
     ok0 = result;
+    free(entropy_input);
   }
   if (!ok0)
   {
@@ -1772,7 +1841,9 @@ generate_sha2_512(
         EverCrypt_HMAC_compute_sha2_512(k_0, k, (uint32_t)64U, input, input_len0);
         EverCrypt_HMAC_compute_sha2_512(v, k_0, (uint32_t)64U, v, (uint32_t)64U);
         memcpy(k, k_0, (uint32_t)64U * sizeof (uint8_t));
+        free(input);
       }
+      free(input0);
     }
     uint8_t *output1 = output;
     uint32_t max = n / (uint32_t)64U;
@@ -1818,10 +1889,12 @@ generate_sha2_512(
       EverCrypt_HMAC_compute_sha2_512(k_0, k, (uint32_t)64U, input, input_len0);
       EverCrypt_HMAC_compute_sha2_512(v, k_0, (uint32_t)64U, v, (uint32_t)64U);
       memcpy(k, k_0, (uint32_t)64U * sizeof (uint8_t));
+      free(input);
     }
     uint32_t old_ctr = ctr[0U];
     ctr[0U] = old_ctr + (uint32_t)1U;
     b = true;
+    free(input0);
   }
   return true;
 }

@@ -24,6 +24,7 @@
 
 
 #include "Hacl_HKDF.h"
+#define alloca malloc
 
 /**
 Expand pseudorandom key to desired length.
@@ -82,6 +83,7 @@ Hacl_HKDF_expand_sha2_256(
     uint8_t *block = okm + n * tlen;
     memcpy(block, tag, (len - n * tlen) * sizeof (uint8_t));
   }
+  free(text);
 }
 
 /**
@@ -162,6 +164,7 @@ Hacl_HKDF_expand_sha2_384(
     uint8_t *block = okm + n * tlen;
     memcpy(block, tag, (len - n * tlen) * sizeof (uint8_t));
   }
+  free(text);
 }
 
 /**
@@ -242,6 +245,7 @@ Hacl_HKDF_expand_sha2_512(
     uint8_t *block = okm + n * tlen;
     memcpy(block, tag, (len - n * tlen) * sizeof (uint8_t));
   }
+  free(text);
 }
 
 /**
@@ -322,6 +326,7 @@ Hacl_HKDF_expand_blake2s_32(
     uint8_t *block = okm + n * tlen;
     memcpy(block, tag, (len - n * tlen) * sizeof (uint8_t));
   }
+  free(text);
 }
 
 /**
@@ -402,6 +407,7 @@ Hacl_HKDF_expand_blake2b_32(
     uint8_t *block = okm + n * tlen;
     memcpy(block, tag, (len - n * tlen) * sizeof (uint8_t));
   }
+  free(text);
 }
 
 /**

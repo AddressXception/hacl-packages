@@ -24,6 +24,7 @@
 
 
 #include "Hacl_HMAC_DRBG.h"
+#define alloca malloc
 
 uint32_t Hacl_HMAC_DRBG_reseed_interval = (uint32_t)1024U;
 

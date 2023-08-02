@@ -24,6 +24,7 @@
 
 
 #include "EverCrypt_HKDF.h"
+#define alloca malloc
 
 #include "internal/EverCrypt_HMAC.h"
 
@@ -59,6 +60,7 @@ expand_sha1(
       EverCrypt_HMAC_compute_sha1(tag, prk, prklen, text, tlen + infolen + (uint32_t)1U);
     }
     memcpy(output + i * tlen, tag, tlen * sizeof (uint8_t));
+    free(text);
   }
   if (n * tlen < len)
   {
@@ -114,6 +116,7 @@ expand_sha2_256(
       EverCrypt_HMAC_compute_sha2_256(tag, prk, prklen, text, tlen + infolen + (uint32_t)1U);
     }
     memcpy(output + i * tlen, tag, tlen * sizeof (uint8_t));
+    free(text);
   }
   if (n * tlen < len)
   {
@@ -184,6 +187,7 @@ expand_sha2_384(
     uint8_t *block = okm + n * tlen;
     memcpy(block, tag, (len - n * tlen) * sizeof (uint8_t));
   }
+  free(text);
 }
 
 static void
@@ -239,6 +243,7 @@ expand_sha2_512(
     uint8_t *block = okm + n * tlen;
     memcpy(block, tag, (len - n * tlen) * sizeof (uint8_t));
   }
+  free(text);
 }
 
 static void
@@ -294,6 +299,7 @@ expand_blake2s(
     uint8_t *block = okm + n * tlen;
     memcpy(block, tag, (len - n * tlen) * sizeof (uint8_t));
   }
+  free(text);
 }
 
 static void
@@ -349,6 +355,7 @@ expand_blake2b(
     uint8_t *block = okm + n * tlen;
     memcpy(block, tag, (len - n * tlen) * sizeof (uint8_t));
   }
+  free(text);
 }
 
 static void

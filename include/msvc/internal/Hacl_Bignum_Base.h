@@ -30,6 +30,8 @@
 extern "C" {
 #endif
 
+#define alloca malloc
+
 #include <string.h>
 #include "krml/internal/types.h"
 #include "krml/lowstar_endianness.h"
@@ -77,6 +79,7 @@ Hacl_Bignum_Convert_bn_from_bytes_be_uint64(uint32_t len, uint8_t *b, uint64_t *
     uint64_t x = u;
     os[i] = x;
   }
+  free(tmp);
 }
 
 static inline void
@@ -92,6 +95,7 @@ Hacl_Bignum_Convert_bn_to_bytes_be_uint64(uint32_t len, uint64_t *b, uint8_t *re
     store64_be(tmp + i * (uint32_t)8U, b[bnLen - i - (uint32_t)1U]);
   }
   memcpy(res, tmp + tmpLen - len, len * sizeof (uint8_t));
+  free(tmp);
 }
 
 static inline uint32_t Hacl_Bignum_Lib_bn_get_top_index_u32(uint32_t len, uint32_t *b)
@@ -413,6 +417,7 @@ Hacl_Bignum_Multiplication_bn_sqr_u32(uint32_t aLen, uint32_t *a, uint32_t *res)
     tmp[(uint32_t)2U * i + (uint32_t)1U] = hi;
   }
   uint32_t c1 = Hacl_Bignum_Addition_bn_add_eq_len_u32(aLen + aLen, res, tmp, res);
+  free(tmp);
 }
 
 static inline void
@@ -462,6 +467,7 @@ Hacl_Bignum_Multiplication_bn_sqr_u64(uint32_t aLen, uint64_t *a, uint64_t *res)
     tmp[(uint32_t)2U * i + (uint32_t)1U] = hi;
   }
   uint64_t c1 = Hacl_Bignum_Addition_bn_add_eq_len_u64(aLen + aLen, res, tmp, res);
+  free(tmp);
 }
 
 #if defined(__cplusplus)

@@ -24,6 +24,7 @@
 
 
 #include "internal/EverCrypt_HMAC.h"
+#define alloca malloc
 
 #include "internal/Hacl_Krmllib.h"
 #include "internal/Hacl_Hash_SHA2.h"
@@ -186,6 +187,9 @@ EverCrypt_HMAC_compute_sha1(
     rem,
     rem_len);
   Hacl_Hash_Core_SHA1_legacy_finish(s, dst);
+  free(opad);
+  free(ipad);
+  free(key_block);
 }
 
 void
@@ -314,6 +318,9 @@ EverCrypt_HMAC_compute_sha2_256(
     rem,
     s);
   Hacl_SHA2_Scalar32_sha256_finish(s, dst);
+  free(opad);
+  free(ipad);
+  free(key_block);
 }
 
 void
@@ -443,6 +450,9 @@ EverCrypt_HMAC_compute_sha2_384(
     rem,
     s);
   Hacl_SHA2_Scalar32_sha384_finish(s, dst);
+  free(opad);
+  free(ipad);
+  free(key_block);
 }
 
 void
@@ -572,6 +582,9 @@ EverCrypt_HMAC_compute_sha2_512(
     rem,
     s);
   Hacl_SHA2_Scalar32_sha512_finish(s, dst);
+  free(opad);
+  free(ipad);
+  free(key_block);
 }
 
 void
@@ -708,6 +721,9 @@ EverCrypt_HMAC_compute_blake2s(
     rem_len,
     rem);
   Hacl_Blake2s_32_blake2s_finish((uint32_t)32U, dst, s0);
+  free(opad);
+  free(ipad);
+  free(key_block);
 }
 
 void
@@ -861,6 +877,9 @@ EverCrypt_HMAC_compute_blake2b(
     rem_len,
     rem);
   Hacl_Blake2b_32_blake2b_finish((uint32_t)64U, dst, s0);
+  free(opad);
+  free(ipad);
+  free(key_block);
 }
 
 void
