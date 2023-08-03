@@ -241,7 +241,10 @@ Hacl_HMAC_DRBG_instantiate(
           Hacl_HMAC_legacy_compute_sha1(k_0, k, (uint32_t)20U, input, input_len0);
           Hacl_HMAC_legacy_compute_sha1(v, k_0, (uint32_t)20U, v, (uint32_t)20U);
           memcpy(k, k_0, (uint32_t)20U * sizeof (uint8_t));
+          free(input);
         }
+        free(input0);
+        free(seed_material);
         break;
       }
     case Spec_Hash_Definitions_SHA2_256:
@@ -302,7 +305,10 @@ Hacl_HMAC_DRBG_instantiate(
           Hacl_HMAC_compute_sha2_256(k_0, k, (uint32_t)32U, input, input_len0);
           Hacl_HMAC_compute_sha2_256(v, k_0, (uint32_t)32U, v, (uint32_t)32U);
           memcpy(k, k_0, (uint32_t)32U * sizeof (uint8_t));
+          free(input);
         }
+        free(input0);
+        free(seed_material);
         break;
       }
     case Spec_Hash_Definitions_SHA2_384:
@@ -363,7 +369,10 @@ Hacl_HMAC_DRBG_instantiate(
           Hacl_HMAC_compute_sha2_384(k_0, k, (uint32_t)48U, input, input_len0);
           Hacl_HMAC_compute_sha2_384(v, k_0, (uint32_t)48U, v, (uint32_t)48U);
           memcpy(k, k_0, (uint32_t)48U * sizeof (uint8_t));
+          free(input);
         }
+        free(input0);
+        free(seed_material);
         break;
       }
     case Spec_Hash_Definitions_SHA2_512:
@@ -424,7 +433,10 @@ Hacl_HMAC_DRBG_instantiate(
           Hacl_HMAC_compute_sha2_512(k_0, k, (uint32_t)64U, input, input_len0);
           Hacl_HMAC_compute_sha2_512(v, k_0, (uint32_t)64U, v, (uint32_t)64U);
           memcpy(k, k_0, (uint32_t)64U * sizeof (uint8_t));
+          free(input);
         }
+        free(input0);
+        free(seed_material);
         break;
       }
     default:
@@ -508,8 +520,11 @@ Hacl_HMAC_DRBG_reseed(
           Hacl_HMAC_legacy_compute_sha1(k_0, k, (uint32_t)20U, input, input_len0);
           Hacl_HMAC_legacy_compute_sha1(v, k_0, (uint32_t)20U, v, (uint32_t)20U);
           memcpy(k, k_0, (uint32_t)20U * sizeof (uint8_t));
+          free(input);
         }
         ctr[0U] = (uint32_t)1U;
+        free(input0);
+        free(seed_material);
         break;
       }
     case Spec_Hash_Definitions_SHA2_256:
@@ -563,8 +578,11 @@ Hacl_HMAC_DRBG_reseed(
           Hacl_HMAC_compute_sha2_256(k_0, k, (uint32_t)32U, input, input_len0);
           Hacl_HMAC_compute_sha2_256(v, k_0, (uint32_t)32U, v, (uint32_t)32U);
           memcpy(k, k_0, (uint32_t)32U * sizeof (uint8_t));
+          free(input);
         }
         ctr[0U] = (uint32_t)1U;
+        free(input0);
+        free(seed_material);
         break;
       }
     case Spec_Hash_Definitions_SHA2_384:
@@ -618,8 +636,11 @@ Hacl_HMAC_DRBG_reseed(
           Hacl_HMAC_compute_sha2_384(k_0, k, (uint32_t)48U, input, input_len0);
           Hacl_HMAC_compute_sha2_384(v, k_0, (uint32_t)48U, v, (uint32_t)48U);
           memcpy(k, k_0, (uint32_t)48U * sizeof (uint8_t));
+          free(input);
         }
         ctr[0U] = (uint32_t)1U;
+        free(input0);
+        free(seed_material);
         break;
       }
     case Spec_Hash_Definitions_SHA2_512:
@@ -673,8 +694,11 @@ Hacl_HMAC_DRBG_reseed(
           Hacl_HMAC_compute_sha2_512(k_0, k, (uint32_t)64U, input, input_len0);
           Hacl_HMAC_compute_sha2_512(v, k_0, (uint32_t)64U, v, (uint32_t)64U);
           memcpy(k, k_0, (uint32_t)64U * sizeof (uint8_t));
+          free(input);
         }
         ctr[0U] = (uint32_t)1U;
+        free(input0);
+        free(seed_material);
         break;
       }
     default:
@@ -752,7 +776,9 @@ Hacl_HMAC_DRBG_generate(
             Hacl_HMAC_legacy_compute_sha1(k_0, k, (uint32_t)20U, input, input_len0);
             Hacl_HMAC_legacy_compute_sha1(v, k_0, (uint32_t)20U, v, (uint32_t)20U);
             memcpy(k, k_0, (uint32_t)20U * sizeof (uint8_t));
+            free(input);
           }
+          free(input0);
         }
         uint8_t *output1 = output;
         uint32_t max = n / (uint32_t)20U;
@@ -800,9 +826,11 @@ Hacl_HMAC_DRBG_generate(
           Hacl_HMAC_legacy_compute_sha1(k_0, k, (uint32_t)20U, input, input_len0);
           Hacl_HMAC_legacy_compute_sha1(v, k_0, (uint32_t)20U, v, (uint32_t)20U);
           memcpy(k, k_0, (uint32_t)20U * sizeof (uint8_t));
+          free(input);
         }
         uint32_t old_ctr = ctr[0U];
         ctr[0U] = old_ctr + (uint32_t)1U;
+        free(input0);
         return true;
       }
     case Spec_Hash_Definitions_SHA2_256:
@@ -850,7 +878,9 @@ Hacl_HMAC_DRBG_generate(
             Hacl_HMAC_compute_sha2_256(k_0, k, (uint32_t)32U, input, input_len0);
             Hacl_HMAC_compute_sha2_256(v, k_0, (uint32_t)32U, v, (uint32_t)32U);
             memcpy(k, k_0, (uint32_t)32U * sizeof (uint8_t));
+            free(input);
           }
+          free(input0);
         }
         uint8_t *output1 = output;
         uint32_t max = n / (uint32_t)32U;
@@ -898,9 +928,11 @@ Hacl_HMAC_DRBG_generate(
           Hacl_HMAC_compute_sha2_256(k_0, k, (uint32_t)32U, input, input_len0);
           Hacl_HMAC_compute_sha2_256(v, k_0, (uint32_t)32U, v, (uint32_t)32U);
           memcpy(k, k_0, (uint32_t)32U * sizeof (uint8_t));
+          free(input);
         }
         uint32_t old_ctr = ctr[0U];
         ctr[0U] = old_ctr + (uint32_t)1U;
+        free(input0);
         return true;
       }
     case Spec_Hash_Definitions_SHA2_384:
@@ -948,7 +980,9 @@ Hacl_HMAC_DRBG_generate(
             Hacl_HMAC_compute_sha2_384(k_0, k, (uint32_t)48U, input, input_len0);
             Hacl_HMAC_compute_sha2_384(v, k_0, (uint32_t)48U, v, (uint32_t)48U);
             memcpy(k, k_0, (uint32_t)48U * sizeof (uint8_t));
+            free(input);
           }
+          free(input0);
         }
         uint8_t *output1 = output;
         uint32_t max = n / (uint32_t)48U;
@@ -996,9 +1030,11 @@ Hacl_HMAC_DRBG_generate(
           Hacl_HMAC_compute_sha2_384(k_0, k, (uint32_t)48U, input, input_len0);
           Hacl_HMAC_compute_sha2_384(v, k_0, (uint32_t)48U, v, (uint32_t)48U);
           memcpy(k, k_0, (uint32_t)48U * sizeof (uint8_t));
+          free(input);
         }
         uint32_t old_ctr = ctr[0U];
         ctr[0U] = old_ctr + (uint32_t)1U;
+        free(input0);
         return true;
       }
     case Spec_Hash_Definitions_SHA2_512:
@@ -1046,7 +1082,9 @@ Hacl_HMAC_DRBG_generate(
             Hacl_HMAC_compute_sha2_512(k_0, k, (uint32_t)64U, input, input_len0);
             Hacl_HMAC_compute_sha2_512(v, k_0, (uint32_t)64U, v, (uint32_t)64U);
             memcpy(k, k_0, (uint32_t)64U * sizeof (uint8_t));
+            free(input);
           }
+          free(input0);
         }
         uint8_t *output1 = output;
         uint32_t max = n / (uint32_t)64U;
@@ -1094,9 +1132,11 @@ Hacl_HMAC_DRBG_generate(
           Hacl_HMAC_compute_sha2_512(k_0, k, (uint32_t)64U, input, input_len0);
           Hacl_HMAC_compute_sha2_512(v, k_0, (uint32_t)64U, v, (uint32_t)64U);
           memcpy(k, k_0, (uint32_t)64U * sizeof (uint8_t));
+          free(input);
         }
         uint32_t old_ctr = ctr[0U];
         ctr[0U] = old_ctr + (uint32_t)1U;
+        free(input0);
         return true;
       }
     default:

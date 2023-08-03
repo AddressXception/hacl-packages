@@ -109,6 +109,7 @@ void Hacl_Bignum32_mul(uint32_t len, uint32_t *a, uint32_t *b, uint32_t *res)
   uint32_t *tmp = (uint32_t *)alloca((uint32_t)4U * len * sizeof (uint32_t));
   memset(tmp, 0U, (uint32_t)4U * len * sizeof (uint32_t));
   Hacl_Bignum_Karatsuba_bn_karatsuba_mul_uint32(len, a, b, tmp, res);
+  free(tmp);
 }
 
 /**
@@ -123,6 +124,7 @@ void Hacl_Bignum32_sqr(uint32_t len, uint32_t *a, uint32_t *res)
   uint32_t *tmp = (uint32_t *)alloca((uint32_t)4U * len * sizeof (uint32_t));
   memset(tmp, 0U, (uint32_t)4U * len * sizeof (uint32_t));
   Hacl_Bignum_Karatsuba_bn_karatsuba_sqr_uint32(len, a, tmp, res);
+  free(tmp);
 }
 
 static inline void
@@ -196,6 +198,11 @@ bn_slow_precomp(
   memset(tmp, 0U, (uint32_t)4U * len * sizeof (uint32_t));
   Hacl_Bignum_Karatsuba_bn_karatsuba_mul_uint32(len, a_mod, r2, tmp, c);
   Hacl_Bignum_Montgomery_bn_mont_reduction_u32(len, n, mu, c, res);
+  free(tmp);
+  free(c);
+  free(tmp0);
+  free(a1);
+  free(a_mod);
 }
 
 /**
@@ -236,11 +243,13 @@ bool Hacl_Bignum32_mod(uint32_t len, uint32_t *n, uint32_t *a, uint32_t *res)
     Hacl_Bignum_Montgomery_bn_precomp_r2_mod_n_u32(len, nBits, n, r2);
     uint32_t mu = Hacl_Bignum_ModInvLimb_mod_inv_uint32(n[0U]);
     bn_slow_precomp(len, n, mu, r2, a, res);
+    free(r2);
   }
   else
   {
     memset(res, 0U, len * sizeof (uint32_t));
   }
+  free(one);
   return is_valid_m == (uint32_t)0xFFFFFFFFU;
 }
 
@@ -438,11 +447,14 @@ bool Hacl_Bignum32_mod_inv_prime_vartime(uint32_t len, uint32_t *n, uint32_t *a,
       (uint32_t)32U * len,
       n2,
       res);
+    free(n2);
   }
   else
   {
     memset(res, 0U, len * sizeof (uint32_t));
   }
+  free(bn_zero);
+  free(one);
   return is_valid_m == (uint32_t)0xFFFFFFFFU;
 }
 
@@ -678,6 +690,7 @@ Hacl_Bignum32_mod_inv_prime_vartime_precomp(
     (uint32_t)32U * len1,
     n2,
     res);
+  free(n2);
 }
 
 
@@ -732,6 +745,7 @@ uint32_t *Hacl_Bignum32_new_bn_from_bytes_be(uint32_t len, uint8_t *b)
     uint32_t x = u;
     os[i] = x;
   }
+  free(tmp);
   return res2;
 }
 
@@ -783,6 +797,7 @@ uint32_t *Hacl_Bignum32_new_bn_from_bytes_le(uint32_t len, uint8_t *b)
     uint32_t x = r1;
     os[i] = x;
   }
+  free(tmp);
   return res2;
 }
 
@@ -804,6 +819,7 @@ void Hacl_Bignum32_bn_to_bytes_be(uint32_t len, uint32_t *b, uint8_t *res)
     store32_be(tmp + i * (uint32_t)4U, b[bnLen - i - (uint32_t)1U]);
   }
   memcpy(res, tmp + tmpLen - len, len * sizeof (uint8_t));
+  free(tmp);
 }
 
 /**
@@ -824,6 +840,7 @@ void Hacl_Bignum32_bn_to_bytes_le(uint32_t len, uint32_t *b, uint8_t *res)
     store32_le(tmp + i * (uint32_t)4U, b[i]);
   }
   memcpy(res, tmp, len * sizeof (uint8_t));
+  free(tmp);
 }
 
 

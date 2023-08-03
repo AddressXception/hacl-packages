@@ -319,6 +319,7 @@ Hacl_GenericField64_exp_consttime(
       resM[i] = resM[i] ^ dummy;
       aMc[i] = aMc[i] ^ dummy;
     }
+    free(ctx);
   }
   else
   {
@@ -413,7 +414,12 @@ Hacl_GenericField64_exp_consttime(
       uint64_t *ctx_n = ctx;
       Hacl_Bignum_Montgomery_bn_mont_mul_u64(len1, ctx_n, k1.mu, resM, tmp0, resM);
     }
+    free(tmp0);
+    free(tmp);
+    free(table);
+    free(ctx);
   }
+  free(aMc);
 }
 
 /**
@@ -473,6 +479,7 @@ Hacl_GenericField64_exp_vartime(
       uint64_t *ctx_n0 = ctx;
       Hacl_Bignum_Montgomery_bn_mont_sqr_u64(len1, ctx_n0, k1.mu, aMc, aMc);
     }
+    free(ctx);
   }
   else
   {
@@ -547,7 +554,12 @@ Hacl_GenericField64_exp_vartime(
       uint64_t *ctx_n = ctx;
       Hacl_Bignum_Montgomery_bn_mont_mul_u64(len1, ctx_n, k1.mu, resM, tmp0, resM);
     }
+    free(tmp0);
+    free(tmp);
+    free(table);
+    free(ctx);
   }
+  free(aMc);
 }
 
 /**
@@ -614,5 +626,6 @@ Hacl_GenericField64_inverse(
     c1 = c0;
   }
   Hacl_GenericField64_exp_vartime(k, aM, k1.len * (uint32_t)64U, n2, aInvM);
+  free(n2);
 }
 

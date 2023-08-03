@@ -148,6 +148,8 @@ mgf_hash(
     hash(a, acc_i, len + (uint32_t)4U, mgfseed_counter);
   }
   memcpy(res, acc, maskLen * sizeof (uint8_t));
+  free(acc);
+  free(mgfseed_counter);
 }
 
 static inline uint64_t check_num_bits_u64(uint32_t bs, uint64_t *b)
@@ -171,6 +173,7 @@ static inline uint64_t check_num_bits_u64(uint32_t bs, uint64_t *b)
     acc = (beq & acc) | (~beq & ((blt & (uint64_t)0xFFFFFFFFFFFFFFFFU) | (~blt & (uint64_t)0U)));
   }
   uint64_t res = acc;
+  free(b2);
   return res;
 }
 
@@ -195,6 +198,7 @@ static inline uint64_t check_modulus_u64(uint32_t modBits, uint64_t *n)
   uint64_t res = acc;
   uint64_t m1 = res;
   uint64_t m2 = check_num_bits_u64(modBits, n);
+  free(b2);
   return m0 & (m1 & m2);
 }
 
@@ -214,6 +218,7 @@ static inline uint64_t check_exponent_u64(uint32_t eBits, uint64_t *e)
   uint64_t res = mask1;
   uint64_t m0 = res;
   uint64_t m1 = check_num_bits_u64(eBits, e);
+  free(bn_zero);
   return ~m0 & m1;
 }
 
@@ -265,6 +270,10 @@ pss_encode(
   memcpy(em, db, dbLen * sizeof (uint8_t));
   memcpy(em + dbLen, m1Hash, hLen * sizeof (uint8_t));
   em[emLen - (uint32_t)1U] = (uint8_t)0xbcU;
+  free(dbMask);
+  free(db);
+  free(m1);
+  free(m1Hash);
 }
 
 static inline bool
@@ -352,6 +361,10 @@ pss_verify(
     res0 = uu____1 & res0;
   }
   uint8_t z0 = res0;
+  free(m1);
+  free(pad2);
+  free(dbMask);
+  free(m1Hash0);
   return z0 == (uint8_t)255U;
 }
 
@@ -511,6 +524,10 @@ Hacl_RSAPSS_rsapss_sign(
     bool eq_b = eq_m == (uint64_t)0xFFFFFFFFFFFFFFFFU;
     Hacl_Bignum_Convert_bn_to_bytes_be_uint64(k, s, sgnt);
     bool eq_b0 = eq_b;
+    free(m_);
+    free(m);
+    free(em);
+    free(m);
     return eq_b0;
   }
   return false;
@@ -626,8 +643,11 @@ Hacl_RSAPSS_rsapss_verify(
       uint64_t *m1 = m;
       Hacl_Bignum_Convert_bn_to_bytes_be_uint64(emLen, m1, em);
       bool res0 = pss_verify(a, saltLen, msgLen, msg, emBits, em);
+      free(em);
       return res0;
     }
+    free(s);
+    free(m);
     return false;
   }
   return false;
@@ -856,10 +876,10 @@ Hacl_RSAPSS_rsapss_skey_sign(
     + (dBits - (uint32_t)1U) / (uint32_t)64U + (uint32_t)1U)
     * sizeof (uint64_t));
   bool b = load_skey(modBits, eBits, dBits, nb, eb, db, skey);
+  
   if (b)
   {
-    return
-      Hacl_RSAPSS_rsapss_sign(a,
+    bool ret = Hacl_RSAPSS_rsapss_sign(a,
         modBits,
         eBits,
         dBits,
@@ -869,7 +889,10 @@ Hacl_RSAPSS_rsapss_skey_sign(
         msgLen,
         msg,
         sgnt);
+    free(skey);
+    return ret;
   }
+  free(skey);
   return false;
 }
 
@@ -922,8 +945,11 @@ Hacl_RSAPSS_rsapss_pkey_verify(
   bool b = load_pkey(modBits, eBits, nb, eb, pkey);
   if (b)
   {
-    return Hacl_RSAPSS_rsapss_verify(a, modBits, eBits, pkey, saltLen, sgntLen, sgnt, msgLen, msg);
+    bool ret = Hacl_RSAPSS_rsapss_verify(a, modBits, eBits, pkey, saltLen, sgntLen, sgnt, msgLen, msg);
+    free(pkey);
+    return ret;
   }
+  free(pkey);
   return false;
 }
 

@@ -130,6 +130,8 @@ Hacl_HPKE_Curve64_CP128_SHA256_setupBaseS(
       memcpy(tmp + (uint32_t)27U, o_kemcontext, (uint32_t)64U * sizeof (uint8_t));
       Hacl_HKDF_expand_sha2_256(o_shared, o_eae_prk, (uint32_t)32U, tmp, len, (uint32_t)32U);
       res0 = (uint32_t)0U;
+      free(tmp);
+      free(tmp0);
     }
     else
     {
@@ -297,6 +299,12 @@ Hacl_HPKE_Curve64_CP128_SHA256_setupBaseS(
     memcpy(tmp + (uint32_t)29U, o_context, (uint32_t)65U * sizeof (uint8_t));
     Hacl_HKDF_expand_sha2_256(o_ctx.ctx_nonce, o_secret, (uint32_t)32U, tmp, len, (uint32_t)12U);
     o_ctx.ctx_seq[0U] = (uint64_t)0U;
+    free(tmp);
+    free(tmp4);
+    free(tmp3);
+    free(tmp2);
+    free(tmp1);
+    free(tmp0);
     return res0;
   }
   return res0;
@@ -407,6 +415,8 @@ Hacl_HPKE_Curve64_CP128_SHA256_setupBaseR(
         memcpy(tmp + (uint32_t)27U, kemcontext, (uint32_t)64U * sizeof (uint8_t));
         Hacl_HKDF_expand_sha2_256(shared, o_eae_prk, (uint32_t)32U, tmp, len, (uint32_t)32U);
         res2 = (uint32_t)0U;
+        free(tmp);
+        free(tmp0);
       }
       else
       {
@@ -574,6 +584,12 @@ Hacl_HPKE_Curve64_CP128_SHA256_setupBaseR(
       memcpy(tmp + (uint32_t)29U, o_context, (uint32_t)65U * sizeof (uint8_t));
       Hacl_HKDF_expand_sha2_256(o_ctx.ctx_nonce, o_secret, (uint32_t)32U, tmp, len, (uint32_t)12U);
       o_ctx.ctx_seq[0U] = (uint64_t)0U;
+      free(tmp);
+      free(tmp4);
+      free(tmp3);
+      free(tmp2);
+      free(tmp1);
+      free(tmp0);
       return (uint32_t)0U;
     }
     return (uint32_t)1U;
